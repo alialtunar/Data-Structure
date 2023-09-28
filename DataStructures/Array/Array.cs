@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DataStructures.Array
@@ -17,6 +18,26 @@ namespace DataStructures.Array
         {
             InnerList = new T[2];
             Count = 0;
+        }
+
+        public Array(params T[] initilaze)
+        {
+            InnerList = new T[initilaze.Length];
+            Count = 0;
+            foreach (var item in initilaze)
+            {
+                Add(item);
+            }
+        }
+
+        public Array(IEnumerable<T> collection)
+        {
+            InnerList = new T[collection.ToArray().Length];
+            Count = 0;
+            foreach(var item in collection)
+            {
+                Add(item);
+            }
         }
 
         public void Add(T item)
@@ -62,7 +83,7 @@ namespace DataStructures.Array
 
         public object Clone()
         {
-            throw new NotImplementedException();
+            return this.MemberwiseClone();
         }
 
         public IEnumerator<T> GetEnumerator()
