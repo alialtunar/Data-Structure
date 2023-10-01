@@ -8,6 +8,7 @@ namespace DataStructures.LinkedList.SinglyLinkedList
     {
         public SinglyLinkedListNode<T> Head { get; set; }
 
+        private bool IsHeadNull => Head == null;
 
         public void AddFirst(T item)
         {
@@ -20,7 +21,7 @@ namespace DataStructures.LinkedList.SinglyLinkedList
         public void AddLast(T item)
         {
             var newNode = new SinglyLinkedListNode<T>(item);
-            if (Head == null)
+            if (IsHeadNull)
             {
                 Head = newNode;
                 return;
@@ -34,5 +35,38 @@ namespace DataStructures.LinkedList.SinglyLinkedList
 
             current.Next = newNode;
         }
+
+        public void AddAfter(SinglyLinkedListNode<T> node,T item)
+        {
+            if (node == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (IsHeadNull)
+            {
+                AddFirst(item);
+                return;
+            }
+
+            var newNode = new SinglyLinkedListNode<T>(item);
+
+           var current = Head;
+           while(current != null)
+            {
+
+                if (current.Equals(node))
+                {
+                    newNode.Next = current.Next;
+                    current.Next = newNode;
+                    return;
+                }
+
+                current = current.Next;
+            }
+            throw new Exception("Data Not Found");
+        }
+
+
     }
 }
